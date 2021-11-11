@@ -23,6 +23,9 @@
         <toolWindow id="SCANL Test Plugin" secondary="true" icon="AllIcons.General.Modified" anchor="right"
                     factoryClass="org.scanl.plugins.poc.ui.SampleActionWindowFactory"/>
         <inspectionToolProvider implementation="org.scanl.plugins.poc.inspections.TestSmellInspectionProvider"/>
+        <applicationService serviceImplementation="org.scanl.plugins.poc.settings.AppSettingsState"/>
+        <applicationConfigurable parentId="tools" instance="org.scanl.plugins.poc.settings.AppSettingsConfigurable"
+                                 id="org.scanl.plugins.poc.settings.AppSettingsConfigurable"/>
     </extensions>
 
     <!-- Actions -->

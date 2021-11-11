@@ -21,6 +21,7 @@ import org.scanl.plugins.poc.SampleVisitor;
 import org.scanl.plugins.poc.model.IdentifierTableModel;
 import org.scanl.plugins.poc.model.Method;
 import org.scanl.plugins.poc.model.SmellType;
+import org.scanl.plugins.poc.settings.AppSettingsState;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -69,6 +70,7 @@ public class SampleActionWindow {
 
 	private void parseTree(DefaultMutableTreeNode tn, VirtualFile vf, Project project) {
 		DefaultMutableTreeNode vftn = new DefaultMutableTreeNode(vf.getName());
+		AppSettingsState settings = AppSettingsState.getInstance();
 
 		if (vf.isDirectory()) {
 			for (VirtualFile child : vf.getChildren()) {
@@ -87,8 +89,10 @@ public class SampleActionWindow {
 				List<Method> methods = sv.getPsiMethods();
 				for (Method m : methods) {
 					DefaultMutableTreeNode methodNode = new DefaultMutableTreeNode(m.getName());
-					for(SmellType smellType:m.getSmellTypeList())
+					for(SmellType smellType : m.getSmellTypeList())
 					{
+						if (!settings.settings.get(smellType)) continue; // don't add if the smell type is disabled
+
 						DefaultMutableTreeNode smellNode = new DefaultMutableTreeNode(smellType);
 						methodNode.add(smellNode);
 					}
